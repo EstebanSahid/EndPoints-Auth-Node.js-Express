@@ -1,21 +1,17 @@
 // Mensaje cuando todo esta OK
-exports.success = function (req, res, mensaje, status) {
-    const statusCode = status || 200;
-    const mensajeOk = mensaje || '';
-    res.status(statusCode).send({
+exports.success = function (req, res, mensaje = '', status = 200) {
+    res.status(status).send({
         error: false,
-        status: statusCode,
-        body: mensajeOk
+        status: status,
+        body: mensaje
     })
 }
 
 // Mensaje cuando hay un error
-exports.error = function (req, res, mensaje, status) {
-    const statusCode = status || 500;
-    const mensajeError = mensaje || 'Error Interno';
-    res.status(statusCode).send({
+exports.error = function (req, res, mensaje = 'Error Interno', status = 500) {
+    res.status(status).send({
         error: true,
-        status: statusCode,
-        body: mensajeError
+        status: status,
+        body: mensaje
     })
 }
