@@ -5,9 +5,59 @@ const controlador = require('./controlador');
 
 const router = express.Router();
 
-router.get('/', async function (req, res) {
-    const items = await controlador.todos()
-    respuestas.success(req, res, items, 200)
-});
+// Rutas
+router.get('/', todos);
+router.get('/:id', uno);
+router.post('/', agregar);
+router.put('/', eliminar);
+
+// Llamada al Controlador
+async function todos (req, res, next) {
+    console.log("contolsa");
+    console.log(req.body);
+    try {
+        const items = await controlador.todos()
+        respuestas.success(req, res, items, 200)
+    } catch (error) {
+        next(err);
+    }
+};
+
+async function uno (req, res, next) {
+    try {
+        const items = await controlador.uno(req.params.id)
+        respuestas.success(req, res, items, 200)
+    } catch (error) {
+        next(err);
+    }
+};
+
+async function agregar (req, res, next) {
+    try {
+        const items = await controlador.agregar(req.body);
+        if (req.body.id == 0) {
+            mensaje = 'Item Guardado con Exito';
+        } else {
+            mensaje = 'Item Actualizado con Exito';
+        }
+        respuestas.success(req, res, mensaje, 201)
+    } catch (error) {
+        next(err);
+    }
+};
+
+async function eliminar (req, res, next) {
+    try {
+        const { id } = req.body;
+        if (id) {
+            const items = await controlador.eliminar(req.body)
+            respuestas.success(req, res, 'Item Eliminado Correctamente', 200)
+        } else {
+            respuestas.error(req, res, "ID necesario", 500);
+        }
+    } catch (error) {
+        next(err);
+    }
+};
 
 module.exports = router;
