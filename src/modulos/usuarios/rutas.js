@@ -13,13 +13,12 @@ router.put('/', eliminar);
 
 // Llamada al Controlador
 async function todos (req, res, next) {
-    console.log("contolsa");
     console.log(req.body);
     try {
         const items = await controlador.todos()
         respuestas.success(req, res, items, 200)
     } catch (error) {
-        next(err);
+        next(error);
     }
 };
 
@@ -28,7 +27,7 @@ async function uno (req, res, next) {
         const items = await controlador.uno(req.params.id)
         respuestas.success(req, res, items, 200)
     } catch (error) {
-        next(err);
+        next(error);
     }
 };
 
@@ -42,7 +41,7 @@ async function agregar (req, res, next) {
         }
         respuestas.success(req, res, mensaje, 201)
     } catch (error) {
-        next(err);
+        next(error);
     }
 };
 
@@ -56,7 +55,7 @@ async function eliminar (req, res, next) {
             respuestas.error(req, res, "ID necesario", 500);
         }
     } catch (error) {
-        next(err);
+        next(error);
     }
 };
 

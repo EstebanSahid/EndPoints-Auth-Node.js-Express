@@ -71,8 +71,8 @@ function eliminar(tabla, data) {
 
 function insertar(tabla, data) {
     return new Promise((resolve, reject) => {
-        const query = "INSERT INTO ?? (nombre, edad, profesion) VALUES (?, ?, ?);";
-        conexion.query(query, [tabla, data.nombre, data.edad, data.profesion], (error, result) => {
+        const query = "INSERT INTO ?? SET ?;";
+        conexion.query(query, [tabla, data], (error, result) => {
             return error ? reject(error) : resolve(result);
         })
     });
@@ -80,8 +80,8 @@ function insertar(tabla, data) {
 
 function actualizar(tabla, data) {
     return new Promise((resolve, reject) => {
-        const query = "UPDATE ?? SET nombre = ?, edad = ?, profesion = ? WHERE id = ?";
-        conexion.query(query, [tabla, data.nombre, data.edad, data.profesion, data.id], (error, result) => {
+        const query = "UPDATE ?? SET ? WHERE id = ?";
+        conexion.query(query, [tabla, data, data.id], (error, result) => {
             return error ? reject(error) : resolve(result);
         })
     });

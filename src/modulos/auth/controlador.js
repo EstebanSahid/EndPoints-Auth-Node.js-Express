@@ -1,5 +1,5 @@
 //const db = require('../../DB/mysql');
-const TABLA = 'clientes';
+const TABLA = 'usuarios';
 
 
 module.exports = function(dbInyectada) {
