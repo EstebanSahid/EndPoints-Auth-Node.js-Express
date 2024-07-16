@@ -1,15 +1,15 @@
 const express = require('express');
-
+const seguridad = require('./seguridad');
 const respuestas = require('../../red/respuestas');
 const controlador = require('./index');
 
 const router = express.Router();
 
 // Rutas
-router.get('/', todos);
-router.get('/:id', uno);
-router.post('/', agregar);
-router.put('/', eliminar);
+router.get('/', seguridad(), todos);
+router.get('/:id', seguridad(), uno);
+router.post('/', seguridad(), agregar);
+router.put('/', seguridad(), eliminar);
 
 // Llamada al Controlador
 async function todos (req, res, next) {
