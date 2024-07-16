@@ -91,11 +91,19 @@ function actualizar(tabla, data) {
     });
 }
 
-
+function select(tabla, consulta) {
+    return new Promise((resolve, reject) => {
+        const query = "SELECT * FROM ?? WHERE ?";
+        conexion.query(query, [tabla, consulta], (error, result) => {
+            return error ? reject(error) : resolve(result[0]);
+        })
+    });
+}
 
 module.exports = {
     todos,
     uno,
     agregar,
-    eliminar
+    eliminar,
+    select
 }

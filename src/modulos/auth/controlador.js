@@ -1,4 +1,5 @@
 const TABLA = 'auth';
+const auth = require('../../auth');
 const bcrypt = require('bcrypt');
 
 module.exports = function(dbInyectada) {
@@ -7,6 +8,19 @@ module.exports = function(dbInyectada) {
 
     if (!db) {
         db = require('../../DB/mysql');
+    }
+
+    async function login(usuario, password) {
+        const data = await db.select(TABLA, {usuario: usuario});
+
+        return bcrypt.compare(password, data.password)
+        .then(res => {
+            if (res) {
+                return auth.asignarToken({...data})
+            } else {
+                throw new Error('Información Inválida');
+            }
+        })
     }
 
     async function agregar(data) {
@@ -27,6 +41,7 @@ module.exports = function(dbInyectada) {
     }
 
     return {
-        agregar
+        agregar,
+        login
     }
 }
