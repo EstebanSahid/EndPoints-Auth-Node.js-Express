@@ -1,5 +1,5 @@
 //const db = require('../../DB/mysql');
-const TABLA = 'usuarios';
+const TABLA = 'auth';
 
 
 module.exports = function(dbInyectada) {
@@ -10,27 +10,25 @@ module.exports = function(dbInyectada) {
         db = require('../../DB/mysql');
     }
 
-    // Retornar todos los datos de la Tabla Clientes
-    function todos() {
-        return db.todos(TABLA);
-    }
+    async function agregar(data) {
+        console.log("llego");
+        const authData = {
+            id: data.id,
+            //password: data.password
+        }
 
-    function uno(id) {
-        return db.uno(TABLA, id);
-    }
+        if (data.usuario) {
+            authData.usuario = data.usuario
+        }
 
-    function agregar(body) {
-        return db.agregar(TABLA, body);
-    }
-
-    function eliminar(body) {
-        return db.eliminar(TABLA, body);
+        if (data.password) {
+            authData.password = data.password
+        }
+        console.log(authData);
+        return await db.agregar(TABLA, authData);
     }
 
     return {
-        todos,
-        uno,
-        agregar,
-        eliminar
+        agregar
     }
 }

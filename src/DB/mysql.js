@@ -53,7 +53,10 @@ function uno(tabla, id) {
 }
 
 function agregar(tabla, data) {
+    console.log("tabla" + tabla + data.id);
     if (data && data.id == 0) {
+        return insertar(tabla, data);
+    } else if (data && data.id !== 0 && tabla == 'auth') {
         return insertar(tabla, data);
     } else {
         return actualizar(tabla, data);
@@ -70,6 +73,7 @@ function eliminar(tabla, data) {
 }
 
 function insertar(tabla, data) {
+    console.log("llego data", data.id + tabla + data.usuario + data.password);
     return new Promise((resolve, reject) => {
         const query = "INSERT INTO ?? SET ?;";
         conexion.query(query, [tabla, data], (error, result) => {
