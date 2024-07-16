@@ -31,15 +31,16 @@ module.exports = function(dbInyectada) {
 
         insertId = (body.id === 0) ? respuesta.insertId : body.id;
 
+        let respuesta2 = '';
         if (body.usuario || body.password) {
-            await auth.agregar({
+            respuesta2 = await auth.agregar({
                 id: insertId,
                 usuario: body.usuario,
                 password: body.password
             })
         }
 
-        return true
+        return respuesta2;
     }
 
     function eliminar(body) {
