@@ -33,6 +33,7 @@ async function uno (req, res, next) {
 
 async function agregar (req, res, next) {
     try {
+        console.log(req.body);
         const items = await controlador.agregar(req.body);
         if (req.body.id == 0) {
             mensaje = 'Item Guardado con Exito';
